@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alphabet des Mikroplastiks</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .input-section {
+            margin-bottom: 40px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #555;
+            font-weight: 500;
+            font-size: 1.1em;
+        }
+
+        #textInput {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2em;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            transition: border-color 0.3s;
+        }
+
+        #textInput:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        .output-section {
+            background-color: #fafafa;
+            padding: 30px;
+            border-radius: 8px;
+            min-height: 200px;
+            border: 2px dashed #ddd;
+        }
+
+        #output {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+
+        .letter-container {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 5px;
+        }
+
+        .letter-image {
+            max-height: 80px;
+            height: auto;
+            object-fit: contain;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .letter-image:hover {
+            transform: scale(1.1);
+        }
+
+        .letter-label {
+            margin-top: 5px;
+            font-size: 0.8em;
+            color: #666;
+            text-align: center;
+        }
+
+        .space {
+            width: 40px;
+            height: 80px;
+            display: inline-block;
+        }
+
+        .newline {
+            width: 100%;
+            height: 20px;
+        }
+
+        .missing-char {
+            width: 60px;
+            height: 80px;
+            background-color: #f0f0f0;
+            border: 2px dashed #ccc;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            font-size: 1.5em;
+            color: #999;
+        }
+
+        .info-section {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #e8f5e9;
+            border-radius: 8px;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .info-section h2 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .mapping-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            background-color: white;
+            border-radius: 4px;
+        }
+
+        .mapping-item {
+            font-family: monospace;
+            font-size: 0.85em;
+            padding: 5px;
+            background-color: #f5f5f5;
+            border-radius: 3px;
+        }
+
+        .toggle-info {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .toggle-info:hover {
+            background-color: #45a049;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Alphabet des Mikroplastiks</h1>
+        
+        <div class="input-section">
+            <label for="textInput">Gib deinen Text ein:</label>
+            <input type="text" id="textInput" placeholder="Schreibe hier deinen Text..." autocomplete="off">
+        </div>
+
+        <div class="output-section">
+            <div id="output"></div>
+        </div>
+
+        <button class="toggle-info" onclick="toggleInfo()">Zeige verfügbare Zeichen</button>
+
+        <div id="infoSection" class="info-section hidden">
+            <h2>Verfügbare Zeichen:</h2>
+            <div id="mappingList" class="mapping-list"></div>
+        </div>
+    </div>
+
+    <script>
+        // Mapping der Zeichen zu Bilddateien
+        const charMapping = {
+            // Großbuchstaben
+            'A': ['A.jpg'], // 'A2.jpg', 'A3.jpg', 'A4.jpg'
+            'B': ['B.jpg'], // 'B2.jpg', 'B3.jpg'
+            'C': ['C.jpg'], // 'C1.jpg', 'C2.jpg', 'C3.jpg', 'C5.jpg'
+            'D': ['D.jpg'], // 'D1.jpg', 'D2.jpg', 'D3.jpg'
+            'E': ['E.jpg'], // 'E1.jpg', 'E2.jpg', 'E3.jpg', 'E4.jpg'
+            'F': ['F.jpg'], // 'F1.jpg'
+            'G': ['G.jpg'], // 'G1.jpg', 'G2.jpg', 'G3.jpg', 'G3 5.jpg'
+            'H': ['H.jpg'], // 'H1.jpg'
+            'I': ['I.jpg'], // 'I1.jpg', 'I2.jpg'
+            'J': ['J.jpg'], // 'J1.jpg'
+            'K': ['K.jpg'],
+            'L': ['L.jpg'], // 'L2.jpg', 'L3.jpg'
+            'M': ['M.jpg'], // 'M1.jpg'
+            'N': ['N.jpg'],
+            'O': ['O.jpg'], // 'O1.jpg', 'O2.jpg'
+            'P': ['P.jpg'],
+            'Q': ['Q.jpg'], // 'Q1.jpg', 'Q2.jpg', 'Q 4.jpg'
+            'R': ['R.jpg'], // 'R1.jpg', 'R4.jpg'
+            'S': ['S.jpg'], // 'S3.jpg', 'S5.jpg'
+            'T': ['T.jpg'], // 'T1.jpg', 'T2.jpg', 'T3.jpg', 'T4.jpg', 'T5.jpg', 'T6.jpg'
+            'U': ['U.jpg'], // 'U2.jpg'
+            'V': ['V.jpg'], // 'V1.jpg', 'V2.jpg'
+            'W': ['W1.jpg'], // 'W2.jpg'
+            'X': ['X.jpg'], // 'X2.jpg'
+            'Y': ['Y.jpg'], // 'Y2.jpg'
+            'Z': ['Z.jpg'],
+            
+            // Kleinbuchstaben (verwende "klein" Versionen wo vorhanden)
+            'a': ['A klein.jpg'], // 'A klein2.jpg'
+            'b': ['B klein.jpg'],
+            'c': ['C klein.jpg'], // 'C klein Haken.jpg'
+            'd': ['D klein.jpg'],
+            'e': ['E klein.jpg'],
+            'f': ['F klein.jpg'], // 'F klein (1).jpg'
+            'g': ['G klein.jpg'], // 'G klein 1.jpg'
+            'h': ['H klein.jpg'],
+            'i': ['I.jpg'], // Verwende Großbuchstabe da kein "klein" vorhanden
+            'j': ['J.jpg'], // Verwende Großbuchstabe da kein "klein" vorhanden
+            'k': ['K.jpg'], // Verwende Großbuchstabe da kein "klein" vorhanden
+            'l': ['L klein.jpg'], // 'L klein 1.jpg', 'L klein 2.jpg'
+            'm': ['M.jpg'], // Verwende Großbuchstabe da kein "klein" vorhanden
+            'n': ['N klein.jpg'],
+            'o': ['O klein.jpg'],
+            'p': ['P klein.jpg'],
+            'q': ['Q klein.jpg'], // 'Q klein1.jpg', 'Q klein 2.jpg'
+            'r': ['R klein.jpg'], // 'R klein2.jpg', 'R klein 2.jpg'
+            's': ['S.jpg'], // Verwende Großbuchstabe da kein "klein" vorhanden
+            't': ['T klein.jpg'], // 'T klein (1).jpg'
+            'u': ['U.jpg'], // Verwende Großbuchstabe da kein "klein" vorhanden
+            'v': ['V.jpg'], // Verwende Großbuchstabe da kein "klein" vorhanden
+            'w': ['W klein.jpg'],
+            'x': ['X klein .jpg'],
+            'y': ['Y klein.jpg'], // 'Y klein2.jpg', 'Y klein 2.jpg'
+            'z': ['Z klein.jpg'],
+            
+            // Zahlen
+            '0': ['0b.jpg'],
+            '1': ['1.jpg'], // '1a.jpg'
+            '2': ['2.jpg'], // '2a.jpg'
+            '3': ['3.jpg'], // '3a.jpg'
+            '4': ['4.jpg'], // '4a.jpg', '4b.jpg'
+            '5': ['5.jpg'], // '5a.jpg'
+            '6': ['6a.jpg'], // '6b.jpg'
+            '7': ['7.jpg'], // '7a.jpg'
+            '8': ['8.jpg'], // '8a.jpg', '8b.jpg'
+            '9': ['9.jpg'], // '9b.jpg'
+            
+            // Sonderzeichen
+            '!': ['Zy Ausrufezeichen.jpg'], // 'Zy Ausrufezeichen1.jpg'
+            '?': ['Zy Fragezeichen.jpg'], // 'Zy Fragezeichen1.jpg'
+            '.': ['Zy Punkt.jpg'],
+            ',': ['Zy Komma.jpg'], // 'Zy Komma1.jpg'
+            ':': ['Zy Doppelpunkt .jpg'], // 'Zy Doppelpunkt 1.jpg', 'Zy Doppelpunkt  2.jpg', 'Zy Doppelpunkt 3.jpg', 'Zy Doppelpunkt 4.jpg', 'Zy Doppelpunkt 5.jpg'
+            ';': ['Zy Strichpunkt.jpg'],
+            '-': ['Zy Minus.jpg'], // 'Zy Minus1.jpg', 'Zy Trennstrich.jpg'
+            '+': ['Zy Pluszeichen.jpg'],
+            '=': ['Zy Gleichzeichen.jpg'],
+            '/': ['Zy Slash.jpg'],
+            '*': ['Zy Sternchen.jpg'],
+            '%': ['Zy Prozentzeichen.jpg'],
+            '€': ['Zy Eurozeichen.jpg'],
+            '@': ['Zy @.jpg'], // 'Zy @1.jpg'
+            '&': ['Zy Kaufmanns-Und.jpg'],
+            "'": ['Zy Apostroph.jpg'], // 'Zy Apostroph1.jpg'
+            '"': ['Zy Anführungszeichen.jpg'], // 'Zy Anführungszeichen ein.jpg', 'Zy Anführungszeichen ein 1.jpg', 'Zy Anführungszeichen ein 2.jpg', 'Zy Anführungszeichen aus.jpg', 'Zy Anführungszeichen  aus.jpg', 'Zy Anführungszeichen aus 1.jpg', 'Zy Anführungszeichen aus 2.jpg'
+            '°': ['Zy Celcius.jpg'],
+            '÷': ['Zy Geteiltzeichen.jpg'],
+            '→': ['Zy Pfeil.jpg'],
+            '…': ['Zy 3Pünktchen.jpg']
+        };
+
+        // Emoji Mapping (optional erweiterbar)
+        const emojiMapping = {
+            '😂': 'Zz Emoji Joy.png',
+            '😊': 'Zz Emoji glücklich.jpg',
+            '😢': 'Zz Emoji traurig.jpg',
+            '❤️': 'Zz Emoji Herz.jpg',
+            '⭐': 'Zz Emoji Stern.jpg',
+            '☀️': 'Zz Emoji Sonne1.jpg',
+            '🌹': 'Zz Emoji Rose.jpg',
+            '👻': 'Zz Emoji Geist.jpg',
+            '🍄': 'Zz Emoji Pilz.jpg',
+            '🦈': 'Zz Emoji Hai.jpg',
+            '🐴': 'Zz Emoji Pferd.jpg',
+            '👟': 'Zz Emoji Schuh.jpg',
+            '🌊': 'Zz Emoji Welle.jpg',
+            '☁️': 'Zz Emoji Wolke.jpg',
+            '✌️': 'Zz Emoji Victoryzeichen.jpg',
+            '🤘': 'Zz Emoji Rock n Roll.jpg',
+            '📍': 'Zz Emoji Standort.jpg',
+            '✝️': 'Zz Emoji Kreuz.jpg',
+            '👨‍🚀': 'Zz Emoji Astronaut.jpg',
+            '🐵': 'Zz Emoji Monkey.jpg'
+        };
+
+        // Funktion zum Konvertieren des Texts
+        function convertTextToImages(text) {
+            const output = document.getElementById('output');
+            output.innerHTML = '';
+
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                
+                if (char === ' ') {
+                    // Leerzeichen
+                    const space = document.createElement('div');
+                    space.className = 'space';
+                    output.appendChild(space);
+                } else if (char === '\n') {
+                    // Zeilenumbruch
+                    const newline = document.createElement('div');
+                    newline.className = 'newline';
+                    output.appendChild(newline);
+                } else {
+                    let imageFound = false;
+                    
+                    // Prüfe normales Zeichen-Mapping
+                    if (charMapping[char]) {
+                        const images = charMapping[char];
+                        const selectedImage = images[0]; // Verwende immer das erste (und einzige) Bild
+                        createImageElement(selectedImage, char, output);
+                        imageFound = true;
+                    }
+                    // Prüfe Emoji-Mapping
+                    else if (emojiMapping[char]) {
+                        createImageElement(emojiMapping[char], char, output);
+                        imageFound = true;
+                    }
+                    // Fallback für fehlende Zeichen
+                    else {
+                        const missing = document.createElement('div');
+                        missing.className = 'missing-char';
+                        missing.textContent = char;
+                        missing.title = `Kein Bild für "${char}" gefunden`;
+                        output.appendChild(missing);
+                    }
+                }
+            }
+        }
+
+        // Hilfsfunktion zum Erstellen von Bildelementen
+        function createImageElement(filename, char, container) {
+            const letterContainer = document.createElement('div');
+            letterContainer.className = 'letter-container';
+            
+            const img = document.createElement('img');
+            img.src = `img/${filename}`;
+            img.alt = char;
+            img.className = 'letter-image';
+            img.title = `${char} - ${filename}`;
+            
+            const label = document.createElement('div');
+            label.className = 'letter-label';
+            label.textContent = char;
+            
+            letterContainer.appendChild(img);
+            letterContainer.appendChild(label);
+            container.appendChild(letterContainer);
+        }
+
+        // Event Listener für Texteingabe
+        document.getElementById('textInput').addEventListener('input', function(e) {
+            convertTextToImages(e.target.value);
+        });
+
+        // Funktion zum Anzeigen/Verbergen der Zeichenliste
+        function toggleInfo() {
+            const infoSection = document.getElementById('infoSection');
+            infoSection.classList.toggle('hidden');
+            
+            if (!infoSection.classList.contains('hidden') && !infoSection.dataset.loaded) {
+                displayAvailableChars();
+                infoSection.dataset.loaded = 'true';
+            }
+        }
+
+        // Zeige verfügbare Zeichen
+        function displayAvailableChars() {
+            const mappingList = document.getElementById('mappingList');
+            mappingList.innerHTML = '';
+            
+            // Normale Zeichen
+            for (const [char, images] of Object.entries(charMapping)) {
+                const item = document.createElement('div');
+                item.className = 'mapping-item';
+                item.textContent = `${char} → ${images[0]}`;
+                mappingList.appendChild(item);
+            }
+            
+            // Emojis
+            for (const [emoji, image] of Object.entries(emojiMapping)) {
+                const item = document.createElement('div');
+                item.className = 'mapping-item';
+                item.textContent = `${emoji} → ${image}`;
+                mappingList.appendChild(item);
+            }
+        }
+
+        // Beispieltext beim Laden
+        window.addEventListener('load', function() {
+            const exampleText = 'Hallo Welt!';
+            document.getElementById('textInput').value = exampleText;
+            convertTextToImages(exampleText);
+        });
+    </script>
+</body>
+</html> 
