@@ -71,16 +71,17 @@
         #output {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 2px;
             align-items: flex-start;
             justify-content: flex-start;
+            line-height: 1.1;
         }
 
         .letter-container {
             display: inline-flex;
             flex-direction: column;
             align-items: center;
-            margin: 5px;
+            margin: 1px;
         }
 
         .letter-image {
@@ -104,7 +105,7 @@
         }
 
         .space {
-            width: 40px;
+            width: 25px;
             height: 80px;
             display: inline-block;
         }
@@ -144,22 +145,250 @@
 
         .mapping-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
             gap: 10px;
             margin-top: 15px;
-            max-height: 300px;
+            max-height: 400px;
             overflow-y: auto;
-            padding: 10px;
+            padding: 15px;
             background-color: white;
             border-radius: 4px;
         }
 
         .mapping-item {
-            font-family: monospace;
-            font-size: 0.85em;
-            padding: 5px;
-            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px;
+            background-color: #f9f9f9;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .mapping-item:hover {
+            background-color: #e3f2fd;
+            border-color: #2196F3;
+            transform: scale(1.05);
+        }
+
+        .mapping-item:active {
+            transform: scale(0.95);
+        }
+
+        .char-thumbnail {
+            max-width: 40px;
+            max-height: 40px;
+            object-fit: contain;
             border-radius: 3px;
+            margin-bottom: 5px;
+        }
+
+        .char-label {
+            font-size: 0.8em;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+        }
+
+        .char-filename {
+            font-size: 0.6em;
+            color: #666;
+            text-align: center;
+            margin-top: 2px;
+        }
+
+        .controls-section {
+            margin: 20px 0;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .control-group label {
+            margin: 0;
+            font-size: 0.9em;
+        }
+
+        .size-slider {
+            width: 120px;
+        }
+
+        .action-button {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s;
+        }
+
+        .action-button:hover {
+            background-color: #1976D2;
+        }
+
+        .action-button.print {
+            background-color: #4CAF50;
+        }
+
+        .action-button.print:hover {
+            background-color: #45a049;
+        }
+
+        /* Admin Interface Styles */
+        .admin-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            display: none;
+        }
+
+        .admin-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 1000px;
+            height: 80%;
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .close-admin {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .admin-section {
+            margin-bottom: 30px;
+        }
+
+        .admin-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            border-left: 4px solid #2196F3;
+            padding-left: 15px;
+        }
+
+        .char-admin {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .char-admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .char-admin-header h4 {
+            margin: 0;
+            font-size: 1.2em;
+        }
+
+        .image-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .image-admin-item {
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            padding: 10px;
+            text-align: center;
+            transition: border-color 0.3s;
+        }
+
+        .image-admin-item.active {
+            border-color: #4CAF50;
+            background-color: #f8fff8;
+        }
+
+        .image-admin-item.inactive {
+            border-color: #f44336;
+            background-color: #fff8f8;
+            opacity: 0.6;
+        }
+
+        .image-admin-thumbnail {
+            max-width: 60px;
+            max-height: 60px;
+            object-fit: contain;
+            margin-bottom: 8px;
+        }
+
+        .image-admin-controls {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            margin-top: 8px;
+        }
+
+        .small-button {
+            padding: 4px 8px;
+            font-size: 0.7em;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .toggle-button {
+            background-color: #2196F3;
+            color: white;
+        }
+
+        .delete-button {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .rename-button {
+            background-color: #FF9800;
+            color: white;
+        }
+
+        .admin-instructions {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            color: #0277BD;
         }
 
         .toggle-info {
@@ -178,6 +407,59 @@
             background-color: #45a049;
         }
 
+        .admin-button {
+            background-color: #FF6600;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s;
+            font-weight: 500;
+        }
+
+        .admin-button:hover {
+            background-color: #E55A00;
+            transform: translateY(-1px);
+        }
+
+        .admin-button:active {
+            transform: translateY(0);
+        }
+
+        .emoji-buttons {
+            display: flex;
+            gap: 8px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .emoji-button {
+            background-color: #f9f9f9;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: all 0.3s;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .emoji-button:hover {
+            background-color: #e3f2fd;
+            border-color: #2196F3;
+            transform: scale(1.1);
+        }
+
+        .emoji-label {
+            font-size: 0.8em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
         .hidden {
             display: none;
         }
@@ -190,146 +472,277 @@
         <div class="input-section">
             <label for="textInput">Gib deinen Text ein:</label>
             <input type="text" id="textInput" placeholder="Schreibe hier deinen Text..." autocomplete="off">
+            
+            <div class="emoji-label">Häufig verwendete Emojis:</div>
+            <div class="emoji-buttons">
+                <div class="emoji-button" onclick="insertCharacter('😊')" title="Glücklich">😊</div>
+                <div class="emoji-button" onclick="insertCharacter('😢')" title="Traurig">😢</div>
+                <div class="emoji-button" onclick="insertCharacter('❤️')" title="Herz">❤️</div>
+                <div class="emoji-button" onclick="insertCharacter('⭐')" title="Stern">⭐</div>
+                <div class="emoji-button" onclick="insertCharacter('☀️')" title="Sonne - TESTE MICH!">☀️</div>
+                <div class="emoji-button" onclick="insertCharacter('🌹')" title="Rose">🌹</div>
+                <div class="emoji-button" onclick="insertCharacter('👻')" title="Geist">👻</div>
+                <div class="emoji-button" onclick="insertCharacter('🚀')" title="Rakete">🚀</div>
+                <div class="emoji-button" onclick="insertCharacter('🐵')" title="Affe">🐵</div>
+                <div class="emoji-button" onclick="insertCharacter('🤘')" title="Rock'n'Roll">🤘</div>
+
+            </div>
+        </div>
+
+        <div class="controls-section">
+            <div class="control-group">
+                <label for="sizeSlider">Schriftgröße:</label>
+                <input type="range" id="sizeSlider" class="size-slider" min="40" max="200" value="80" oninput="updateLetterSize(this.value)">
+                <span id="sizeValue">80px</span>
+            </div>
+            <div class="control-group">
+                <button class="action-button" onclick="clearText()">Text löschen</button>
+                <button class="action-button print" onclick="printText()">Drucken</button>
+                <button class="action-button" onclick="exportAsImage()">Als Bild exportieren</button>
+            </div>
         </div>
 
         <div class="output-section">
             <div id="output"></div>
         </div>
 
-        <button class="toggle-info" onclick="toggleInfo()">Zeige verfügbare Zeichen</button>
+        <div style="display: flex; gap: 15px; align-items: center; margin-top: 20px;">
+            <button class="toggle-info" onclick="toggleInfo()">Zeige verfügbare Zeichen</button>
+            <button class="admin-button" onclick="openAdminPanel()" title="Öffnet das Admin-Panel zur Bildverwaltung">
+                🛠️ Admin-Modus
+            </button>
+        </div>
+
 
         <div id="infoSection" class="info-section hidden">
             <h2>Verfügbare Zeichen:</h2>
             <div id="mappingList" class="mapping-list"></div>
         </div>
+
+        <!-- Admin Panel (versteckt, aktivierbar mit Ctrl+Alt+A) -->
+        <div id="adminPanel" class="admin-panel">
+            <div class="admin-content">
+                <div class="admin-header">
+                    <h2>🛠️ Admin-Interface - Bildverwaltung</h2>
+                    <button class="close-admin" onclick="closeAdminPanel()">✕ Schließen</button>
+                </div>
+                
+                <div class="admin-instructions">
+                    <strong>Admin-Modus aktiviert!</strong><br>
+                    Hier können Sie die Bildversionen verwalten, aktivieren/deaktivieren und umbenennen. 
+                    Änderungen werden lokal gespeichert (im Browser). 
+                    <br><em>Zugang: Admin-Button oder Shortcut Ctrl+Alt+A</em>
+                </div>
+
+                <div class="admin-section">
+                    <h3>📋 Buchstaben & Zeichen verwalten</h3>
+                    <div id="adminCharList"></div>
+                </div>
+
+                <div class="admin-section">
+                    <h3>😊 Emoji verwalten</h3>
+                    <div id="adminEmojiList"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Mapping der Zeichen zu Bilddateien
+        // Admin-Interface: Deaktivierte Bilder verwalten (muss früh definiert werden)
+        let disabledImages = JSON.parse(localStorage.getItem('disabledImages') || '[]');
+        
+        // Mapping der Zeichen zu Bilddateien - ALLE Versionen aktiviert für zufällige Auswahl
         const charMapping = {
             // Großbuchstaben
-            'A': ['A.jpg'], // 'A2.jpg', 'A3.jpg', 'A4.jpg'
-            'B': ['B.jpg'], // 'B2.jpg', 'B3.jpg'
-            'C': ['C.jpg'], // 'C1.jpg', 'C2.jpg', 'C3.jpg', 'C5.jpg'
-            'D': ['D.jpg'], // 'D1.jpg', 'D2.jpg', 'D3.jpg'
-            'E': ['E.jpg'], // 'E1.jpg', 'E2.jpg', 'E3.jpg', 'E4.jpg'
-            'F': ['F.jpg'], // 'F1.jpg'
-            'G': ['G.jpg'], // 'G1.jpg', 'G2.jpg', 'G3.jpg', 'G3 5.jpg'
-            'H': ['H.jpg'], // 'H1.jpg'
-            'I': ['I.jpg'], // 'I1.jpg', 'I2.jpg'
-            'J': ['J.jpg'], // 'J1.jpg'
+            'A': ['A.jpg', 'A2.jpg', 'A3.jpg', 'A4.jpg'],
+            'B': ['B.jpg', 'B2.jpg', 'B3.jpg'],
+            'C': ['C.jpg', 'C1.jpg', 'C2.jpg', 'C3.jpg', 'C5.jpg'],
+            'D': ['D.jpg', 'D1.jpg', 'D2.jpg', 'D3.jpg'],
+            'E': ['E.jpg', 'E1.jpg', 'E2.jpg', 'E3.jpg', 'E4.jpg'],
+            'F': ['F.jpg', 'F1.jpg'],
+            'G': ['G.jpg', 'G1.jpg', 'G2.jpg', 'G3.jpg', 'G3 5.jpg'],
+            'H': ['H.jpg', 'H1.jpg'],
+            'I': ['I.jpg', 'I1.jpg', 'I2.jpg'],
+            'J': ['J.jpg', 'J1.jpg'],
             'K': ['K.jpg'],
-            'L': ['L.jpg'], // 'L2.jpg', 'L3.jpg'
-            'M': ['M.jpg'], // 'M1.jpg'
+            'L': ['L.jpg', 'L2.jpg', 'L3.jpg'],
+            'M': ['M.jpg', 'M1.jpg'],
             'N': ['N.jpg'],
-            'O': ['O.jpg'], // 'O1.jpg', 'O2.jpg'
+            'O': ['O.jpg', 'O1.jpg', 'O2.jpg'],
             'P': ['P.jpg'],
-            'Q': ['Q.jpg'], // 'Q1.jpg', 'Q2.jpg', 'Q 4.jpg'
-            'R': ['R.jpg'], // 'R1.jpg', 'R4.jpg'
-            'S': ['S.jpg'], // 'S3.jpg', 'S5.jpg'
-            'T': ['T.jpg'], // 'T1.jpg', 'T2.jpg', 'T3.jpg', 'T4.jpg', 'T5.jpg', 'T6.jpg'
-            'U': ['U.jpg'], // 'U2.jpg'
-            'V': ['V.jpg'], // 'V1.jpg', 'V2.jpg'
-            'W': ['W1.jpg'], // 'W2.jpg'
-            'X': ['X.jpg'], // 'X2.jpg'
-            'Y': ['Y.jpg'], // 'Y2.jpg'
+            'Q': ['Q.jpg', 'Q1.jpg', 'Q2.jpg', 'Q 4.jpg'],
+            'R': ['R.jpg', 'R1.jpg', 'R4.jpg'],
+            'S': ['S.jpg', 'S3.jpg', 'S5.jpg'],
+            'T': ['T.jpg', 'T1.jpg', 'T2.jpg', 'T3.jpg', 'T4.jpg', 'T5.jpg', 'T6.jpg'],
+            'U': ['U.jpg', 'U2.jpg'],
+            'V': ['V.jpg', 'V1.jpg', 'V2.jpg'],
+            'W': ['W1.jpg', 'W2.jpg'],
+            'X': ['X.jpg', 'X2.jpg'],
+            'Y': ['Y.jpg', 'Y2.jpg'],
             'Z': ['Z.jpg'],
             
             // Kleinbuchstaben (verwende "klein" Versionen wo vorhanden)
-            'a': ['A klein.jpg'], // 'A klein2.jpg'
+            'a': ['A klein.jpg', 'A klein2.jpg'],
             'b': ['B klein.jpg'],
-            'c': ['C klein.jpg'], // 'C klein Haken.jpg'
+            'c': ['C klein.jpg', 'C klein Haken.jpg'],
             'd': ['D klein.jpg'],
             'e': ['E klein.jpg'],
-            'f': ['F klein.jpg'], // 'F klein (1).jpg'
-            'g': ['G klein.jpg'], // 'G klein 1.jpg'
+            'f': ['F klein.jpg', 'F klein (1).jpg'],
+            'g': ['G klein.jpg', 'G klein 1.jpg'],
             'h': ['H klein.jpg'],
             'i': ['I.jpg'], // Verwende Großbuchstabe da kein "klein" vorhanden
             'j': ['J.jpg'], // Verwende Großbuchstabe da kein "klein" vorhanden
             'k': ['K.jpg'], // Verwende Großbuchstabe da kein "klein" vorhanden
-            'l': ['L klein.jpg'], // 'L klein 1.jpg', 'L klein 2.jpg'
+            'l': ['L klein.jpg', 'L klein 1.jpg', 'L klein 2.jpg'],
             'm': ['M.jpg'], // Verwende Großbuchstabe da kein "klein" vorhanden
             'n': ['N klein.jpg'],
             'o': ['O klein.jpg'],
             'p': ['P klein.jpg'],
-            'q': ['Q klein.jpg'], // 'Q klein1.jpg', 'Q klein 2.jpg'
-            'r': ['R klein.jpg'], // 'R klein2.jpg', 'R klein 2.jpg'
+            'q': ['Q klein.jpg', 'Q klein1.jpg', 'Q klein 2.jpg'],
+            'r': ['R klein.jpg', 'R klein2.jpg', 'R klein 2.jpg'],
             's': ['S.jpg'], // Verwende Großbuchstabe da kein "klein" vorhanden
-            't': ['T klein.jpg'], // 'T klein (1).jpg'
+            't': ['T klein.jpg', 'T klein (1).jpg'],
             'u': ['U.jpg'], // Verwende Großbuchstabe da kein "klein" vorhanden
             'v': ['V.jpg'], // Verwende Großbuchstabe da kein "klein" vorhanden
             'w': ['W klein.jpg'],
             'x': ['X klein .jpg'],
-            'y': ['Y klein.jpg'], // 'Y klein2.jpg', 'Y klein 2.jpg'
+            'y': ['Y klein.jpg', 'Y klein2.jpg', 'Y klein 2.jpg'],
             'z': ['Z klein.jpg'],
             
             // Zahlen
             '0': ['0b.jpg'],
-            '1': ['1.jpg'], // '1a.jpg'
-            '2': ['2.jpg'], // '2a.jpg'
-            '3': ['3.jpg'], // '3a.jpg'
-            '4': ['4.jpg'], // '4a.jpg', '4b.jpg'
-            '5': ['5.jpg'], // '5a.jpg'
-            '6': ['6a.jpg'], // '6b.jpg'
-            '7': ['7.jpg'], // '7a.jpg'
-            '8': ['8.jpg'], // '8a.jpg', '8b.jpg'
-            '9': ['9.jpg'], // '9b.jpg'
+            '1': ['1.jpg', '1a.jpg'],
+            '2': ['2.jpg', '2a.jpg'],
+            '3': ['3.jpg', '3a.jpg'],
+            '4': ['4.jpg', '4a.jpg', '4b.jpg'],
+            '5': ['5.jpg', '5a.jpg'],
+            '6': ['6a.jpg', '6b.jpg'],
+            '7': ['7.jpg', '7a.jpg'],
+            '8': ['8.jpg', '8a.jpg', '8b.jpg'],
+            '9': ['9.jpg', '9b.jpg'],
             
             // Sonderzeichen
-            '!': ['Zy Ausrufezeichen.jpg'], // 'Zy Ausrufezeichen1.jpg'
-            '?': ['Zy Fragezeichen.jpg'], // 'Zy Fragezeichen1.jpg'
+            '!': ['Zy Ausrufezeichen.jpg', 'Zy Ausrufezeichen1.jpg'],
+            '?': ['Zy Fragezeichen.jpg', 'Zy Fragezeichen1.jpg'],
             '.': ['Zy Punkt.jpg'],
-            ',': ['Zy Komma.jpg'], // 'Zy Komma1.jpg'
-            ':': ['Zy Doppelpunkt .jpg'], // 'Zy Doppelpunkt 1.jpg', 'Zy Doppelpunkt  2.jpg', 'Zy Doppelpunkt 3.jpg', 'Zy Doppelpunkt 4.jpg', 'Zy Doppelpunkt 5.jpg'
+            ',': ['Zy Komma.jpg', 'Zy Komma1.jpg'],
+            ':': ['Zy Doppelpunkt .jpg', 'Zy Doppelpunkt 1.jpg', 'Zy Doppelpunkt  2.jpg', 'Zy Doppelpunkt 3.jpg', 'Zy Doppelpunkt 4.jpg', 'Zy Doppelpunkt 5.jpg'],
             ';': ['Zy Strichpunkt.jpg'],
-            '-': ['Zy Minus.jpg'], // 'Zy Minus1.jpg', 'Zy Trennstrich.jpg'
+            '-': ['Zy Minus.jpg', 'Zy Minus1.jpg', 'Zy Trennstrich.jpg'],
             '+': ['Zy Pluszeichen.jpg'],
             '=': ['Zy Gleichzeichen.jpg'],
             '/': ['Zy Slash.jpg'],
             '*': ['Zy Sternchen.jpg'],
             '%': ['Zy Prozentzeichen.jpg'],
             '€': ['Zy Eurozeichen.jpg'],
-            '@': ['Zy @.jpg'], // 'Zy @1.jpg'
+            '@': ['Zy @.jpg', 'Zy @1.jpg'],
             '&': ['Zy Kaufmanns-Und.jpg'],
-            "'": ['Zy Apostroph.jpg'], // 'Zy Apostroph1.jpg'
-            '"': ['Zy Anführungszeichen.jpg'], // 'Zy Anführungszeichen ein.jpg', 'Zy Anführungszeichen ein 1.jpg', 'Zy Anführungszeichen ein 2.jpg', 'Zy Anführungszeichen aus.jpg', 'Zy Anführungszeichen  aus.jpg', 'Zy Anführungszeichen aus 1.jpg', 'Zy Anführungszeichen aus 2.jpg'
+            "'": ['Zy Apostroph.jpg', 'Zy Apostroph1.jpg'],
+            '"': ['Zy Anf�hrungszeichen.jpg', 'Zy Anf�hrungszeichen ein.jpg', 'Zy Anf�hrungszeichen ein 1.jpg', 'Zy Anf�hrungszeichen ein 2.jpg', 'Zy Anf�hrungszeichen  aus.jpg', 'Zy Anf�hrungszeichen aus 1.jpg', 'Zy Anf�hrungszeichen aus 2.jpg'],
             '°': ['Zy Celcius.jpg'],
             '÷': ['Zy Geteiltzeichen.jpg'],
             '→': ['Zy Pfeil.jpg'],
-            '…': ['Zy 3Pünktchen.jpg']
+            // '…': ['Zy 3Pünktchen.jpg'] // Datei nicht gefunden, deaktiviert
         };
 
-        // Emoji Mapping (optional erweiterbar)
-        const emojiMapping = {
-            '😂': 'Zz Emoji Joy.png',
-            '😊': 'Zz Emoji glücklich.jpg',
-            '😢': 'Zz Emoji traurig.jpg',
-            '❤️': 'Zz Emoji Herz.jpg',
-            '⭐': 'Zz Emoji Stern.jpg',
-            '☀️': 'Zz Emoji Sonne1.jpg',
-            '🌹': 'Zz Emoji Rose.jpg',
-            '👻': 'Zz Emoji Geist.jpg',
-            '🍄': 'Zz Emoji Pilz.jpg',
-            '🦈': 'Zz Emoji Hai.jpg',
-            '🐴': 'Zz Emoji Pferd.jpg',
-            '👟': 'Zz Emoji Schuh.jpg',
-            '🌊': 'Zz Emoji Welle.jpg',
-            '☁️': 'Zz Emoji Wolke.jpg',
-            '✌️': 'Zz Emoji Victoryzeichen.jpg',
-            '🤘': 'Zz Emoji Rock n Roll.jpg',
-            '📍': 'Zz Emoji Standort.jpg',
-            '✝️': 'Zz Emoji Kreuz.jpg',
-            '👨‍🚀': 'Zz Emoji Astronaut.jpg',
-            '🐵': 'Zz Emoji Monkey.jpg'
-        };
+        // KOMPLETT NEUES Emoji Mapping - Mit korrekten Unicode-Codes
+        const emojiMapping = new Map();
+        
+        // Füge Emojis einzeln hinzu für bessere Kontrolle
+        function initEmojiMapping() {
+            // Basis-Emojis
+            emojiMapping.set('😂', 'Zz Emoji Joy.png');
+            emojiMapping.set('😊', 'Zz Emoji gl�cklich.jpg');
+            emojiMapping.set('😢', 'Zz Emoji traurig.jpg');
+            emojiMapping.set('❤️', 'Zz Emoji Herz.jpg');
+            emojiMapping.set('❤', 'Zz Emoji Herz.jpg'); // Fallback ohne Variation Selector
+            emojiMapping.set('⭐', 'Zz Emoji Stern.jpg');
+            emojiMapping.set('☀️', 'Zz Emoji Sonne1.jpg');
+            emojiMapping.set('☀', 'Zz Emoji Sonne1.jpg'); // Fallback ohne Variation Selector
+            emojiMapping.set('🌹', 'Zz Emoji Rose.jpg');
+            emojiMapping.set('👻', 'Zz Emoji Geist.jpg');
+            emojiMapping.set('🍄', 'Zz Emoji Pilz.jpg');
+            emojiMapping.set('🦈', 'Zz Emoji Hai.jpg');
+            emojiMapping.set('🐴', 'Zz Emoji Pferd.jpg');
+            emojiMapping.set('👟', 'Zz Emoji Schuh.jpg');
+            emojiMapping.set('🌊', 'Zz Emoji Welle.jpg');
+            emojiMapping.set('☁️', 'Zz Emoji Wolke.jpg');
+            emojiMapping.set('☁', 'Zz Emoji Wolke.jpg'); // Fallback
+            emojiMapping.set('✌️', 'Zz Emoji Victoryzeichen.jpg');
+            emojiMapping.set('✌', 'Zz Emoji Victoryzeichen.jpg'); // Fallback
+            emojiMapping.set('🤘', 'Zz Emoji Rock n Roll.jpg');
+            emojiMapping.set('📍', 'Zz Emoji Standort.jpg');
+            emojiMapping.set('✝️', 'Zz Emoji Kreuz.jpg');
+            emojiMapping.set('✝', 'Zz Emoji Kreuz.jpg'); // Fallback
+            emojiMapping.set('🚀', 'Zz Emoji Astronaut.jpg');
+            emojiMapping.set('🐵', 'Zz Emoji Monkey.jpg');
+            
+
+        }
+        
+        // Initialisiere sofort
+        initEmojiMapping();
+        
+        // Hilfsfunktion für besseres Emoji-Matching
+        function findEmoji(char) {
+            // 1. Direkte Suche
+            if (emojiMapping.has(char)) {
+                return emojiMapping.get(char);
+            }
+            
+            // 2. Normalisierte Suche (entferne Variation Selectors)
+            const normalizedChar = char.replace(/[\uFE00-\uFE0F]/g, '');
+            if (normalizedChar !== char && emojiMapping.has(normalizedChar)) {
+                return emojiMapping.get(normalizedChar);
+            }
+            
+            // 3. Fallback für komplexe Emojis (ZWJ-Sequenzen)
+            if (char.includes('\u200D')) {
+                for (const [emoji, image] of emojiMapping.entries()) {
+                    if (char.includes(emoji)) {
+                        return image;
+                    }
+                }
+            }
+            
+            return null;
+        }
+
+        // Hilfsfunktion: Prüfe ob Zeichen ein Variation Selector ist
+        function isVariationSelector(char) {
+            const code = char.charCodeAt(0);
+            return (code >= 0xFE00 && code <= 0xFE0F) || (code >= 0xE0100 && code <= 0xE01EF);
+        }
+        
+        // Hilfsfunktion: Prüfe ob Zeichen ein Modifier ist (Hautfarbe etc.)
+        function isEmojiModifier(char) {
+            const code = char.charCodeAt(0);
+            return (code >= 0x1F3FB && code <= 0x1F3FF);
+        }
+        
+        // Hilfsfunktion: Prüfe ob Zeichen ignoriert werden soll
+        function shouldIgnoreChar(char) {
+            return isVariationSelector(char) || 
+                   isEmojiModifier(char) || 
+                   char === '\u200D' || // Zero Width Joiner
+                   char === '\uFEFF';   // Zero Width No-Break Space
+        }
 
         // Funktion zum Konvertieren des Texts
         function convertTextToImages(text) {
             const output = document.getElementById('output');
             output.innerHTML = '';
 
-            for (let i = 0; i < text.length; i++) {
-                const char = text[i];
+            // Verwende Array.from für korrekte Unicode-Iteration (Emoji-freundlich)
+            const chars = Array.from(text);
+            
+            for (let i = 0; i < chars.length; i++) {
+                const char = chars[i];
+                
+                // SONDERBEHANDLUNG: Ignoriere Variation Selectors und Modifier
+                if (shouldIgnoreChar(char)) {
+                    continue; // Überspringe dieses Zeichen komplett
+                }
                 
                 if (char === ' ') {
                     // Leerzeichen
@@ -344,20 +757,24 @@
                 } else {
                     let imageFound = false;
                     
-                    // Prüfe normales Zeichen-Mapping
-                    if (charMapping[char]) {
-                        const images = charMapping[char];
-                        const selectedImage = images[0]; // Verwende immer das erste (und einzige) Bild
+                    // PRÜFE BEIDES PARALLEL und entscheide dann
+                    const normalImages = charMapping[char] ? charMapping[char].filter(image => !disabledImages.includes(image)) : [];
+                    const emojiImage = findEmoji(char);
+                    
+                    // PRIORITÄT 1: Normale Zeichen (Buchstaben, Zahlen, Sonderzeichen)
+                    if (normalImages.length > 0) {
+                        const selectedImage = normalImages[Math.floor(Math.random() * normalImages.length)];
                         createImageElement(selectedImage, char, output);
                         imageFound = true;
                     }
-                    // Prüfe Emoji-Mapping
-                    else if (emojiMapping[char]) {
-                        createImageElement(emojiMapping[char], char, output);
+                    // PRIORITÄT 2: Emoji-Mapping (nur wenn KEIN normales Zeichen)
+                    else if (emojiImage && !disabledImages.includes(emojiImage)) {
+                        createImageElement(emojiImage, char, output);
                         imageFound = true;
                     }
+                    
                     // Fallback für fehlende Zeichen
-                    else {
+                    if (!imageFound) {
                         const missing = document.createElement('div');
                         missing.className = 'missing-char';
                         missing.textContent = char;
@@ -404,31 +821,414 @@
             }
         }
 
-        // Zeige verfügbare Zeichen
+        // Zeige verfügbare Zeichen mit Thumbnails und Klickbarkeit
         function displayAvailableChars() {
             const mappingList = document.getElementById('mappingList');
             mappingList.innerHTML = '';
             
             // Normale Zeichen
             for (const [char, images] of Object.entries(charMapping)) {
-                const item = document.createElement('div');
-                item.className = 'mapping-item';
-                item.textContent = `${char} → ${images[0]}`;
-                mappingList.appendChild(item);
+                // Für jede verfügbare Version eines Zeichens
+                images.forEach(image => {
+                    const item = document.createElement('div');
+                    item.className = 'mapping-item';
+                    item.onclick = () => insertCharacter(char);
+                    
+                    const thumbnail = document.createElement('img');
+                    thumbnail.src = `img/${image}`;
+                    thumbnail.className = 'char-thumbnail';
+                    thumbnail.alt = char;
+                    
+                    const label = document.createElement('div');
+                    label.className = 'char-label';
+                    label.textContent = char;
+                    
+                    const filename = document.createElement('div');
+                    filename.className = 'char-filename';
+                    filename.textContent = image;
+                    
+                    item.appendChild(thumbnail);
+                    item.appendChild(label);
+                    item.appendChild(filename);
+                    mappingList.appendChild(item);
+                });
             }
             
-            // Emojis
-            for (const [emoji, image] of Object.entries(emojiMapping)) {
+            // Emojis  
+            for (const [emoji, image] of emojiMapping.entries()) {
                 const item = document.createElement('div');
                 item.className = 'mapping-item';
-                item.textContent = `${emoji} → ${image}`;
+                item.onclick = () => insertCharacter(emoji);
+                
+                const thumbnail = document.createElement('img');
+                thumbnail.src = `img/${image}`;
+                thumbnail.className = 'char-thumbnail';
+                thumbnail.alt = emoji;
+                
+                const label = document.createElement('div');
+                label.className = 'char-label';
+                label.textContent = emoji;
+                
+                const filename = document.createElement('div');
+                filename.className = 'char-filename';
+                filename.textContent = image;
+                
+                item.appendChild(thumbnail);
+                item.appendChild(label);
+                item.appendChild(filename);
                 mappingList.appendChild(item);
             }
         }
 
+        // Zeichen in das Eingabefeld einfügen
+        function insertCharacter(char) {
+            const textInput = document.getElementById('textInput');
+            const currentValue = textInput.value;
+            const cursorPos = textInput.selectionStart;
+            
+            const newValue = currentValue.slice(0, cursorPos) + char + currentValue.slice(cursorPos);
+            textInput.value = newValue;
+            
+            // Cursor nach dem eingefügten Zeichen positionieren
+            textInput.focus();
+            textInput.setSelectionRange(cursorPos + char.length, cursorPos + char.length);
+            
+            // Text neu konvertieren
+            convertTextToImages(newValue);
+        }
+        
+        // Schriftgröße anpassen
+        function updateLetterSize(size) {
+            document.getElementById('sizeValue').textContent = size + 'px';
+            const images = document.querySelectorAll('.letter-image');
+            images.forEach(img => {
+                img.style.maxHeight = size + 'px';
+            });
+            
+            // Auch die Leerzeichen und fehlenden Zeichen anpassen
+            const spaces = document.querySelectorAll('.space');
+            spaces.forEach(space => {
+                space.style.height = size + 'px';
+            });
+            
+            const missingChars = document.querySelectorAll('.missing-char');
+            missingChars.forEach(missing => {
+                missing.style.height = size + 'px';
+                missing.style.fontSize = (size * 0.6) + 'px';
+            });
+        }
+        
+        // Text löschen
+        function clearText() {
+            document.getElementById('textInput').value = '';
+            document.getElementById('output').innerHTML = '';
+        }
+        
+        // Drucken mit optimiertem Layout
+        function printText() {
+            const originalBody = document.body.innerHTML;
+            const printContent = document.getElementById('output').innerHTML;
+            
+            // Erstelle eine Print-optimierte Version
+            const printWindow = window.open('', '', 'height=600,width=800');
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>Alphabet des Mikroplastiks - Druck</title>
+                    <style>
+                        @page {
+                            size: A4 landscape;
+                            margin: 1cm;
+                        }
+                        body {
+                            font-family: Arial, sans-serif;
+                            margin: 0;
+                            padding: 20px;
+                        }
+                        .print-output {
+                            display: flex;
+                            flex-wrap: wrap;
+                            gap: 2px;
+                            align-items: flex-start;
+                            justify-content: flex-start;
+                            line-height: 1.2;
+                        }
+                        .letter-container {
+                            display: inline-flex;
+                            flex-direction: column;
+                            align-items: center;
+                            margin: 1px;
+                        }
+                        .letter-image {
+                            max-height: 60px;
+                            height: auto;
+                            object-fit: contain;
+                        }
+                        .space {
+                            width: 30px;
+                            height: 60px;
+                            display: inline-block;
+                        }
+                        .missing-char {
+                            width: 45px;
+                            height: 60px;
+                            background-color: #f0f0f0;
+                            border: 1px dashed #ccc;
+                            display: inline-flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 1.2em;
+                            color: #666;
+                        }
+                        .newline {
+                            width: 100%;
+                            height: 10px;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <h1>Alphabet des Mikroplastiks</h1>
+                    <div class="print-output">
+                        ${printContent}
+                    </div>
+                </body>
+                </html>
+            `);
+            
+            printWindow.document.close();
+            printWindow.focus();
+            
+            setTimeout(() => {
+                printWindow.print();
+                printWindow.close();
+            }, 250);
+        }
+        
+        // Als Bild exportieren
+        function exportAsImage() {
+            const output = document.getElementById('output');
+            
+            // html2canvas laden (falls nicht vorhanden, Fallback)
+            if (typeof html2canvas === 'undefined') {
+                // Fallback: Screenshot-Anweisung
+                alert('Für den Bildexport können Sie einen Screenshot des Ausgabebereichs machen.\n\nTipp: Verwenden Sie Cmd+Shift+4 (Mac) oder Win+Shift+S (Windows) und wählen Sie den Ausgabebereich aus.');
+                return;
+            }
+            
+            html2canvas(output).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'mikroplastik-alphabet.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        }
+        
+        // ADMIN-INTERFACE FUNKTIONEN
+        
+        // Admin Panel öffnen/schließen
+        function openAdminPanel() {
+            document.getElementById('adminPanel').style.display = 'block';
+            loadAdminInterface();
+        }
+        
+        function closeAdminPanel() {
+            document.getElementById('adminPanel').style.display = 'none';
+        }
+        
+        // Admin Interface laden
+        function loadAdminInterface() {
+            loadCharAdmin();
+            loadEmojiAdmin();
+        }
+        
+        // Buchstaben-Admin laden
+        function loadCharAdmin() {
+            const adminCharList = document.getElementById('adminCharList');
+            adminCharList.innerHTML = '';
+            
+            for (const [char, images] of Object.entries(charMapping)) {
+                const charDiv = document.createElement('div');
+                charDiv.className = 'char-admin';
+                
+                const headerDiv = document.createElement('div');
+                headerDiv.className = 'char-admin-header';
+                headerDiv.innerHTML = `<h4>Zeichen: "${char}" (${images.length} Versionen)</h4>`;
+                
+                const imageList = document.createElement('div');
+                imageList.className = 'image-list';
+                
+                images.forEach(image => {
+                    const itemDiv = document.createElement('div');
+                    const isDisabled = disabledImages.includes(image);
+                    itemDiv.className = `image-admin-item ${isDisabled ? 'inactive' : 'active'}`;
+                    
+                    // Erstelle Elemente sicher ohne innerHTML für onclick-Handler
+                    const img = document.createElement('img');
+                    img.src = `img/${image}`;
+                    img.className = 'image-admin-thumbnail';
+                    img.alt = char;
+                    
+                    const nameDiv = document.createElement('div');
+                    const strong = document.createElement('strong');
+                    strong.textContent = image;
+                    nameDiv.appendChild(strong);
+                    
+                    const controlsDiv = document.createElement('div');
+                    controlsDiv.className = 'image-admin-controls';
+                    
+                    const toggleBtn = document.createElement('button');
+                    toggleBtn.className = 'small-button toggle-button';
+                    toggleBtn.textContent = isDisabled ? 'Aktivieren' : 'Deaktivieren';
+                    toggleBtn.onclick = () => toggleImage(image);
+                    
+                    const renameBtn = document.createElement('button');
+                    renameBtn.className = 'small-button rename-button';
+                    renameBtn.textContent = 'Umbenennen';
+                    renameBtn.onclick = () => renameImage(image);
+                    
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'small-button delete-button';
+                    deleteBtn.textContent = 'Löschen';
+                    deleteBtn.onclick = () => deleteImage(image);
+                    
+                    controlsDiv.appendChild(toggleBtn);
+                    controlsDiv.appendChild(renameBtn);
+                    controlsDiv.appendChild(deleteBtn);
+                    
+                    itemDiv.appendChild(img);
+                    itemDiv.appendChild(nameDiv);
+                    itemDiv.appendChild(controlsDiv);
+                    
+                    imageList.appendChild(itemDiv);
+                });
+                
+                charDiv.appendChild(headerDiv);
+                charDiv.appendChild(imageList);
+                adminCharList.appendChild(charDiv);
+            }
+        }
+        
+        // Emoji-Admin laden
+        function loadEmojiAdmin() {
+            const adminEmojiList = document.getElementById('adminEmojiList');
+            adminEmojiList.innerHTML = '';
+            
+            const emojiDiv = document.createElement('div');
+            emojiDiv.className = 'char-admin';
+            
+            const headerDiv = document.createElement('div');
+            headerDiv.className = 'char-admin-header';
+            headerDiv.innerHTML = `<h4>Emojis (${emojiMapping.size} verfügbar)</h4>`;
+            
+            const imageList = document.createElement('div');
+            imageList.className = 'image-list';
+            
+            for (const [emoji, image] of emojiMapping.entries()) {
+                const itemDiv = document.createElement('div');
+                const isDisabled = disabledImages.includes(image);
+                itemDiv.className = `image-admin-item ${isDisabled ? 'inactive' : 'active'}`;
+                
+                // Erstelle Elemente sicher ohne innerHTML für onclick-Handler
+                const img = document.createElement('img');
+                img.src = `img/${image}`;
+                img.className = 'image-admin-thumbnail';
+                img.alt = emoji;
+                
+                const emojiDiv = document.createElement('div');
+                const strong = document.createElement('strong');
+                strong.textContent = emoji;
+                emojiDiv.appendChild(strong);
+                
+                const filenameDiv = document.createElement('div');
+                filenameDiv.textContent = image;
+                
+                const controlsDiv = document.createElement('div');
+                controlsDiv.className = 'image-admin-controls';
+                
+                const toggleBtn = document.createElement('button');
+                toggleBtn.className = 'small-button toggle-button';
+                toggleBtn.textContent = isDisabled ? 'Aktivieren' : 'Deaktivieren';
+                toggleBtn.onclick = () => toggleImage(image);
+                
+                const renameBtn = document.createElement('button');
+                renameBtn.className = 'small-button rename-button';
+                renameBtn.textContent = 'Umbenennen';
+                renameBtn.onclick = () => renameImage(image);
+                
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'small-button delete-button';
+                deleteBtn.textContent = 'Löschen';
+                deleteBtn.onclick = () => deleteImage(image);
+                
+                controlsDiv.appendChild(toggleBtn);
+                controlsDiv.appendChild(renameBtn);
+                controlsDiv.appendChild(deleteBtn);
+                
+                itemDiv.appendChild(img);
+                itemDiv.appendChild(emojiDiv);
+                itemDiv.appendChild(filenameDiv);
+                itemDiv.appendChild(controlsDiv);
+                
+                imageList.appendChild(itemDiv);
+            }
+            
+            emojiDiv.appendChild(headerDiv);
+            emojiDiv.appendChild(imageList);
+            adminEmojiList.appendChild(emojiDiv);
+        }
+        
+        // Bild aktivieren/deaktivieren
+        function toggleImage(imageName) {
+            const index = disabledImages.indexOf(imageName);
+            if (index > -1) {
+                disabledImages.splice(index, 1);
+            } else {
+                disabledImages.push(imageName);
+            }
+            localStorage.setItem('disabledImages', JSON.stringify(disabledImages));
+            loadAdminInterface();
+        }
+        
+        // Bild umbenennen (Simulation)
+        function renameImage(imageName) {
+            const newName = prompt(`Neuen Namen für "${imageName}" eingeben:`, imageName);
+            if (newName && newName !== imageName) {
+                alert(`Bild würde umbenannt werden von "${imageName}" zu "${newName}"\n\n(In der echten Implementierung würde hier die Datei umbenannt und alle Referenzen aktualisiert werden)`);
+            }
+        }
+        
+        // Bild löschen (Simulation)
+        function deleteImage(imageName) {
+            if (confirm(`Soll das Bild "${imageName}" wirklich gelöscht werden?\n\n(Dies ist eine Simulation - in der echten Implementierung würde die Datei gelöscht werden)`)) {
+                alert(`Bild "${imageName}" wurde gelöscht (Simulation)`);
+            }
+        }
+        
+        // Gefilterte Auswahl für aktivierte Bilder
+        function getActiveImagesForChar(char) {
+            if (charMapping[char]) {
+                return charMapping[char].filter(image => !disabledImages.includes(image));
+            }
+            return [];
+        }
+        
+        // Keyboard Shortcut für Admin Panel (Ctrl+Alt+A)
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.altKey && e.key === 'a') {
+                e.preventDefault();
+                openAdminPanel();
+            }
+        });
+        
+        // Verbesserte Wort-Umbruch-Logik (Entwicklungsnotiz: Wird in zukünftiger Version implementiert)
+        function improveWordWrapping() {
+            // TODO: Implementierung für intelligenten Wort-Umbruch
+            // Wörter sollen nicht getrennt werden
+        }
+
         // Beispieltext beim Laden
         window.addEventListener('load', function() {
-            const exampleText = 'Hallo Welt!';
+            const exampleText = 'Hallo 😊❤️';
             document.getElementById('textInput').value = exampleText;
             convertTextToImages(exampleText);
         });
